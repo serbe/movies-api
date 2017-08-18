@@ -36,3 +36,12 @@ func initServer() {
 
 	http.ListenAndServe("127.0.0.1:6060", r)
 }
+
+func renderError(w http.ResponseWriter, r *http.Request, msg string) {
+	type context struct {
+		Status string `json:"status"`
+		Error  string `json:"error"`
+	}
+	ctx := context{Status: "ok", Error: msg}
+	render.JSON(w, r, ctx)
+}

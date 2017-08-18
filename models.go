@@ -1,7 +1,5 @@
 package main
 
-import "time"
-
 // Movie all values
 // TableName     Название таблицы
 // ID            id
@@ -44,8 +42,6 @@ type Movie struct {
 	IMDb        float64   `sql:"imdb"                      json:"imdb"`
 	Poster      string    `sql:"poster"                    json:"poster"`
 	PosterURL   string    `sql:"poster_url"                json:"poster_url"`
-	CreatedAt   time.Time `sql:"created_at"                json:"created_at"`
-	UpdatedAt   time.Time `sql:"updated_at"                json:"updated_at"`
 	Torrents    []Torrent `sql:"-"                         json:"torrents"`
 }
 
@@ -71,25 +67,23 @@ type Movie struct {
 // Seeders       Количество раздающих
 // Leechers      Количество скачивающих
 type Torrent struct {
-	ID            int64     `sql:"id"`
-	MovieID       int64     `sql:"movie_id"`
-	DateCreate    string    `sql:"date_create"`
-	Href          string    `sql:"href"`
-	Torrent       string    `sql:"torrent"`
-	Magnet        string    `sql:"magnet"`
-	NNM           float64   `sql:"nnm"`
-	SubtitlesType string    `sql:"subtitles_type"`
-	Subtitles     string    `sql:"subtitles"`
-	Video         string    `sql:"video"`
-	Quality       string    `sql:"quality"`
-	Resolution    string    `sql:"resolution"`
-	Audio1        string    `sql:"audio1"`
-	Audio2        string    `sql:"audio2"`
-	Audio3        string    `sql:"audio3"`
-	Translation   string    `sql:"translation"`
-	Size          int       `sql:"size"`
-	Seeders       int       `sql:"seeders"`
-	Leechers      int       `sql:"leechers"`
-	CreatedAt     time.Time `sql:"created_at"`
-	UpdatedAt     time.Time `sql:"updated_at"`
+	ID            int64   `sql:"id"`
+	MovieID       int64   `sql:"movie_id"`
+	DateCreate    string  `sql:"date_create"`
+	Href          string  `sql:"href"`
+	Torrent       string  `sql:"torrent"`
+	Magnet        string  `sql:"magnet"`
+	NNM           float64 `sql:"nnm"`
+	SubtitlesType string  `sql:"subtitles_type"`
+	Subtitles     string  `sql:"subtitles"`
+	Video         string  `sql:"video"`
+	Quality       string  `sql:"quality"`
+	Resolution    string  `sql:"resolution"`
+	Audio1        string  `sql:"audio1"`
+	Audio2        string  `sql:"audio2"`
+	Audio3        string  `sql:"audio3"`
+	Translation   string  `sql:"translation"`
+	Size          int     `sql:"size"`
+	Seeders       int     `sql:"seeders"`
+	Leechers      int     `sql:"leechers"`
 }
