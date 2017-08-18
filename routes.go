@@ -14,7 +14,9 @@ func listMovies(w http.ResponseWriter, r *http.Request) {
 		Title  string  `json:"title"`
 		Movies []Movie `json:"movies"`
 	}
-	movies, err := getAllMovies()
+	query := r.URL.Query()
+	offset := toInt(query.Get("offset"))
+	movies, err := getAllMovies(offset)
 	if err != nil {
 		log.Println("listMovies getAllMovies", err)
 		renderError(w, r, "error in get all movies")
@@ -30,7 +32,7 @@ func getMovie(w http.ResponseWriter, r *http.Request) {
 		Title  string `json:"title"`
 		Movie  Movie  `json:"movie"`
 	}
-	id := toInt(chi.URLParam(r, "id"))
+	id := toInt64(chi.URLParam(r, "id"))
 	movie, err := getMovieByID(id)
 	if err != nil {
 		log.Println("getMovie getMovieByID", err)
@@ -63,7 +65,7 @@ func getTorrent(w http.ResponseWriter, r *http.Request) {
 		Title   string  `json:"title"`
 		Torrent Torrent `json:"torrent"`
 	}
-	id := toInt(chi.URLParam(r, "id"))
+	id := toInt64(chi.URLParam(r, "id"))
 	torrent, err := getTorrentByID(id)
 	if err != nil {
 		log.Println("getTorrent getTorrentByID", err)

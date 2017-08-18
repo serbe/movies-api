@@ -22,9 +22,9 @@ func getMovieByID(id int64) (Movie, error) {
 	return movie, err
 }
 
-func getAllMovies() ([]Movie, error) {
+func getAllMovies(offset int) ([]Movie, error) {
 	var movies []Movie
-	err := db.Model(&movies).Select()
+	err := db.Model(&movies).Offset(offset).Limit(100).Select()
 	if err != nil {
 		return movies, err
 	}
