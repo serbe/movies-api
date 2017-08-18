@@ -1,6 +1,6 @@
 package main
 
 func main() {
-	_ = initDB()
+	initDB()
 	initServer()
 }
