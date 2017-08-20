@@ -8,24 +8,6 @@ import (
 	"github.com/go-chi/render"
 )
 
-func listMovies(w http.ResponseWriter, r *http.Request) {
-	type context struct {
-		Status string  `json:"status"`
-		Title  string  `json:"title"`
-		Movies []Movie `json:"movies"`
-	}
-	query := r.URL.Query()
-	offset := toInt(query.Get("offset"))
-	movies, err := getAllMovies(offset)
-	if err != nil {
-		log.Println("listMovies getAllMovies", err)
-		renderError(w, r, "error in get all movies")
-		return
-	}
-	ctx := context{Status: "ok", Title: "Movies list", Movies: movies}
-	render.JSON(w, r, ctx)
-}
-
 func getMovie(w http.ResponseWriter, r *http.Request) {
 	type context struct {
 		Status string `json:"status"`
@@ -40,6 +22,40 @@ func getMovie(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	ctx := context{Status: "ok", Title: "Movie", Movie: movie}
+	render.JSON(w, r, ctx)
+}
+
+func listMovies(w http.ResponseWriter, r *http.Request) {
+	type context struct {
+		Status string  `json:"status"`
+		Title  string  `json:"title"`
+		Movies []Movie `json:"movies"`
+	}
+	offset := toInt(chi.URLParam(r, "offset"))
+	movies, err := getAllMovies(offset)
+	if err != nil {
+		log.Println("listMovies getAllMovies", err)
+		renderError(w, r, "error in get all movies")
+		return
+	}
+	ctx := context{Status: "ok", Title: "Movies list", Movies: movies}
+	render.JSON(w, r, ctx)
+}
+
+func listMoviesByYear(w http.ResponseWriter, r *http.Request) {
+	type context struct {
+		Status string  `json:"status"`
+		Title  string  `json:"title"`
+		Movies []Movie `json:"movies"`
+	}
+	year := toInt(chi.URLParam(r, "year"))
+	movies, err := getAllMoviesByYear(year)
+	if err != nil {
+		log.Println("listMoviesByYear getAllMoviesByYear", err)
+		renderError(w, r, "error in get all movies")
+		return
+	}
+	ctx := context{Status: "ok", Title: "Movies list", Movies: movies}
 	render.JSON(w, r, ctx)
 }
 

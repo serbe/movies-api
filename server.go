@@ -20,9 +20,14 @@ func initServer() {
 		r.Use(render.SetContentType(render.ContentTypeJSON))
 
 		r.Route("/api/v1/movies", func(r chi.Router) {
-			r.Get("/", listMovies)
 			r.Route("/{id}", func(r chi.Router) {
 				r.Get("/", getMovie)
+			})
+			r.Route("/offset/{offset}", func(r chi.Router) {
+				r.Get("/", listMovies)
+			})
+			r.Route("/year/{year}", func(r chi.Router) {
+				r.Get("/", listMoviesByYear)
 			})
 		})
 

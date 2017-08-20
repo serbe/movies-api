@@ -34,6 +34,18 @@ func getAllMovies(offset int) ([]Movie, error) {
 	return movies, err
 }
 
+func getAllMoviesByYear(year int) ([]Movie, error) {
+	var movies []Movie
+	err := db.Model(&movies).Where("year = ?", year).Limit(100).Select()
+	if err != nil {
+		return movies, err
+	}
+	for i := range movies {
+		movies[i].Torrents, _ = getTottentsByMovieID(movies[i].ID)
+	}
+	return movies, err
+}
+
 func getTorrentByID(id int64) (Torrent, error) {
 	var torrent Torrent
 	err := db.Model(&torrent).Where("id = ?", id).Select()
